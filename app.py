@@ -34,7 +34,7 @@ df['Purpose'] = label_encoders['Purpose'].fit_transform(df['Purpose'])
 st.set_page_config(page_title="Credit Risk Analysis", page_icon=":moneybag:")
 st.title("Credit Risk Detection and Analysis for Loan Applicant")
 
-tabs = st.radio("Select Page", ['Exploratory Data Analysis', 'Risk Prediction'])
+tabs = st.radio("Select Page", ['Exploratory Data Analysis', 'Credit Risk Prediction'])
 
 if tabs == 'Exploratory Data Analysis':
     st.header("Basic Information and Statistics")
@@ -75,7 +75,7 @@ if tabs == 'Exploratory Data Analysis':
     st.image(image, caption='Feature Importance', use_container_width=True)
 
 
-elif tabs == 'Risk Prediction':
+elif tabs == 'Credit Risk Prediction':
     st.header("Credit Risk Prediction App")
 
 
