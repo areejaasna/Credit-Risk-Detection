@@ -31,7 +31,7 @@ label_encoders['Purpose'] = LabelEncoder()
 df['Purpose'] = label_encoders['Purpose'].fit_transform(df['Purpose'])
 
 
-st.set_page_config(page_title="German Credit Risk Prediction", page_icon=":guardsman:")
+st.set_page_config(page_title="Credit Risk Analysis", page_icon=":moneybag:")
 st.title("German Credit Risk Prediction with Clustering")
 
 tabs = st.radio("Select Page", ['Exploratory Data Analysis', 'Risk Prediction'])
