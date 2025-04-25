@@ -78,28 +78,28 @@ if tabs == 'Exploratory Data Analysis':
 elif tabs == 'Risk Prediction':
     st.header("Credit Risk Prediction App")
 
-    # Dropdown menus for user input
+
     age = st.number_input('Age', min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), step=1)
     
     sex = st.selectbox('Sex', options=['male', 'female'])
     
-    # Choose job based on unique values
+    
     job = st.selectbox('Job', options=df['Job'].unique())
 
-    # Choose housing status based on unique values
+    
     housing = st.selectbox('Housing', options=['own', 'free', 'rent'])
 
-    # Choose saving account type based on unique values
+    
     saving_accounts = st.selectbox('Saving Accounts', options=['unknown', 'little', 'quite rich', 'rich', 'moderate'])
     
-    # Choose checking account type based on unique values
+    
     checking_account = st.selectbox('Checking Account', options=['little', 'moderate', 'unknown', 'rich'])
     
-    # Choose purpose of loan based on unique values
+    
     purpose = st.selectbox('Purpose', options=['radio/TV', 'education', 'furniture/equipment', 'car', 'business',
                                                'domestic appliances', 'repairs', 'vacation/others'])
 
-    # Request Credit amount and Duration from user
+    
     credit_amount = st.number_input('Credit Amount', min_value=0, step=100)
     duration = st.number_input('Duration (in months)', min_value=1, step=1)
 
@@ -107,9 +107,9 @@ elif tabs == 'Risk Prediction':
     sex = label_encoders['Sex'].transform([sex])[0]
     job = label_encoders['Job'].transform([job])[0]
     housing = label_encoders['Housing'].transform([housing])[0]
-    purpose = label_encoders['Purpose'].transform([purpose])[0]  # Encode 'Purpose' for user input
+    purpose = label_encoders['Purpose'].transform([purpose])[0]  
 
-    # Handle label encoding for 'Saving accounts' and 'Checking account' before creating user input
+    
     label_encoders['Saving accounts'] = LabelEncoder()
     df['Saving accounts'] = label_encoders['Saving accounts'].fit_transform(df['Saving accounts'].fillna('unknown'))
     
@@ -119,7 +119,7 @@ elif tabs == 'Risk Prediction':
     saving_accounts = label_encoders['Saving accounts'].transform([saving_accounts])[0]
     checking_account = label_encoders['Checking account'].transform([checking_account])[0]
 
-    # Create a DataFrame for the user input
+    
     user_input = pd.DataFrame({
         'Age': [age],
         'Sex': [sex],
@@ -133,16 +133,16 @@ elif tabs == 'Risk Prediction':
     })
 
     if st.button('Predict Risk'):
-        # Predict the cluster the input data belongs to
+        
         cluster = kmeans_rf.predict(user_input)[0]
         st.write(f"The applicant belongs to Cluster {cluster}.")
 
-        # Additional personalized insights based on the cluster can be added here.
+        
         if cluster == 1:
             st.write("The applicant might be a high-risk individual.")
             model = genai.GenerativeModel('gemini-1.5-flash')
             user_input_string = user_input.to_string(index=False)
-            prompt=user_input_string+". and the applicant might be a high-risk individual. Now just give some personalized retention strategy for this customer. keep it concise and impactful."
+            prompt=user_input_string+". and the applicant might be a high-risk individual. Now just give some personalized retention strategy for this applicant. keep it concise and impactful."
             response = model.generate_content(prompt)
             st.write(response.text)
         else:
