@@ -132,7 +132,7 @@ elif tabs == 'Risk Prediction':
         'Purpose': [purpose]
     })
 
-    if st.button('Predict Risk'):
+    if st.button('Predict Credit Risk'):
         
         cluster = kmeans_rf.predict(user_input)[0]
         st.write(f"The applicant belongs to Cluster {cluster}.")
